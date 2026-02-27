@@ -1,0 +1,16 @@
+.product-card:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+.nav-link:hover {
+  color: #dc3545 !important;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
