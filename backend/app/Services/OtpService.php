@@ -34,9 +34,9 @@ class OtpService {
 
         try {
             Mail::to($email)->send(new OtpMail($otpCode, $purpose));
-            EmailLog::create(['to_email' => $email, 'subject' => 'Your OTP - SkyEcomServices', 'type' => 'otp', 'status' => 'sent']);
+            EmailLog::create(['to_email' => $email, 'subject' => 'Your OTP - ' . config('app.name'), 'type' => 'otp', 'status' => 'sent']);
         } catch (\Exception $e) {
-            EmailLog::create(['to_email' => $email, 'subject' => 'Your OTP - SkyEcomServices', 'type' => 'otp', 'status' => 'failed', 'error_message' => $e->getMessage()]);
+            EmailLog::create(['to_email' => $email, 'subject' => 'Your OTP - ' . config('app.name'), 'type' => 'otp', 'status' => 'failed', 'error_message' => $e->getMessage()]);
         }
 
         return ['success' => true, 'message' => 'OTP sent successfully', 'expires_at' => $expiresAt];

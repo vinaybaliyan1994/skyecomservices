@@ -84,7 +84,13 @@ class OrderController extends Controller {
 
             try {
                 Mail::to(auth()->user()->email)->send(new OrderConfirmationMail($order->load('items')));
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+                // Email delivery failure is non-critical; order is already placed
+                \Illuminate\Support\Facades\Log::warning('Order confirmation email failed', [
+                    'order_id' => $order->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
 
             return response()->json(['success' => true, 'message' => 'Order placed successfully', 'data' => $order->load(['items', 'address'])], 201);
         });
