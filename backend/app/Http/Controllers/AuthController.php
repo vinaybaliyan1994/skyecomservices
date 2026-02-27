@@ -71,9 +71,9 @@ class AuthController extends Controller {
         $user = User::where('email', $request->email)->where('is_active', true)->first();
         if (!$user) return response()->json(['success' => false, 'message' => 'Account not found or disabled'], 404);
 
-        $token = JWTAuth::fromUser($user);
         $ttl = $request->remember_me ? config('jwt.remember_ttl', 43200) : config('jwt.ttl', 1440);
         JWTAuth::factory()->setTTL($ttl);
+        $token = JWTAuth::fromUser($user);
 
         return response()->json(['success' => true, 'message' => 'Login successful', 'user' => $user, 'token' => $token]);
     }

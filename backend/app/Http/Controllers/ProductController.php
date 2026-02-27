@@ -126,10 +126,9 @@ class ProductController extends Controller {
             ['rating' => $request->rating, 'title' => $request->title, 'review' => $request->review]
         );
 
-        // Update product rating
-        $avgRating = $product->reviews()->where('is_approved', true)->avg('rating');
-        $reviewCount = $product->reviews()->where('is_approved', true)->count();
-        $product->update(['rating' => round($avgRating ?? 0, 2), 'review_count' => $reviewCount]);
+        // Update product rating with a single query
+        $stats = $product->reviews()->where('is_approved', true)->selectRaw('AVG(rating) as avg_rating, COUNT(*) as review_count')->first();
+        $product->update(['rating' => round($stats->avg_rating ?? 0, 2), 'review_count' => $stats->review_count ?? 0]);
 
         return response()->json(['success' => true, 'message' => 'Review submitted', 'data' => $review], 201);
     }
