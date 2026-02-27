@@ -1,0 +1,23 @@
+# Node.js
+node_modules/
+
+# PHP
+vendor/
+
+# Environment Variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+
+# Dependency directories
+jspm_packages/
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
